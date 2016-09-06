@@ -1,3 +1,9 @@
+/**
+ * Calculate the chances of getting skills of each attribute when combining
+ * with each skill type.
+ */
+
+// attributes
 const PHYSICAL = "Physical";
 const SPIRIT = "Spirit";
 const MARKSMANSHIP = "Marksmanship";
@@ -7,6 +13,7 @@ const NATURE = "Nature";
 const HOLY = "Holy";
 const PRIMAL = "Primal";
 
+// types
 const DAMAGE = "Damage";
 const ENHANCE = "Enhance";
 const WEAKEN = "Weaken";
@@ -21,9 +28,9 @@ const skillsByType = {
 
 function skill(name, attribute, type) {
   skillsByType[type].push({
-    name: name,
-    attribute: attribute,
-    type: type
+    name,
+    attribute,
+    type
   });
 }
 
@@ -152,6 +159,8 @@ skill('Celebration', PRIMAL, DAMAGE);
 function tally(skillType) {
   const counts = {};
   const skills = skillsByType[skillType];
+
+  // count number of skills of each attribute
   skills.forEach((skill) => {
     if (counts[skill.attribute]) {
       counts[skill.attribute]++;
@@ -160,6 +169,7 @@ function tally(skillType) {
     }
   });
 
+  // convert counts to percentage chances
   for (var attr in counts) {
     counts[attr] = ((counts[attr] / skills.length) * 100).toFixed(2)
   }
